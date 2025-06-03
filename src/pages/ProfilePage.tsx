@@ -8,7 +8,7 @@ import { useAuth } from '../context/AuthContext';
 const ProfilePage = () => {
   const { user } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
-  
+
   // User information state
   const [profileData, setProfileData] = useState({
     name: user?.name || '',
@@ -19,34 +19,34 @@ const ProfilePage = () => {
     city: 'Paris',
     country: 'France',
   });
-  
+
   // Password change state
   const [passwords, setPasswords] = useState({
     current: '',
     new: '',
     confirm: '',
   });
-  
+
   const [isSaving, setIsSaving] = useState(false);
   const [isChangingPassword, setIsChangingPassword] = useState(false);
-  
+
   const handleProfileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setProfileData(prev => ({ ...prev, [name]: value }));
   };
-  
+
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setPasswords(prev => ({ ...prev, [name]: value }));
   };
-  
+
   const saveProfile = async () => {
     setIsSaving(true);
-    
+
     try {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
+
       // In a real app, this would be an API call to update profile
       setIsEditing(false);
     } catch (error) {
@@ -55,14 +55,14 @@ const ProfilePage = () => {
       setIsSaving(false);
     }
   };
-  
+
   const changePassword = async () => {
     setIsChangingPassword(true);
-    
+
     try {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
+
       // In a real app, this would be an API call to change password
       setPasswords({
         current: '',
@@ -75,16 +75,14 @@ const ProfilePage = () => {
       setIsChangingPassword(false);
     }
   };
-  
+
   return (
     <div className="max-w-3xl mx-auto animate-fade-in">
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-900">Your Profile</h1>
-        <p className="mt-1 text-gray-500">
-          Manage your account settings and personal information
-        </p>
+        <p className="mt-1 text-gray-500">Manage your account settings and personal information</p>
       </div>
-      
+
       {/* Profile Information Card */}
       <Card className="mb-8">
         <CardHeader className="pb-2 flex flex-row items-center justify-between">
@@ -93,16 +91,12 @@ const ProfilePage = () => {
             <CardTitle>Personal Information</CardTitle>
           </div>
           {!isEditing && (
-            <Button 
-              variant="outline" 
-              size="sm"
-              onClick={() => setIsEditing(true)}
-            >
+            <Button variant="outline" size="sm" onClick={() => setIsEditing(true)}>
               Edit
             </Button>
           )}
         </CardHeader>
-        
+
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Input
@@ -112,7 +106,7 @@ const ProfilePage = () => {
               onChange={handleProfileChange}
               disabled={!isEditing}
             />
-            
+
             <Input
               label="Email"
               name="email"
@@ -120,8 +114,9 @@ const ProfilePage = () => {
               value={profileData.email}
               onChange={handleProfileChange}
               disabled={!isEditing}
+              icon={<Mail className="h-4 w-4 text-gray-400" />}
             />
-            
+
             <Input
               label="Phone Number"
               name="phone"
@@ -130,7 +125,7 @@ const ProfilePage = () => {
               disabled={!isEditing}
               icon={<Phone className="h-4 w-4 text-gray-400" />}
             />
-            
+
             <Input
               label="Street Address"
               name="address"
@@ -139,7 +134,7 @@ const ProfilePage = () => {
               disabled={!isEditing}
               icon={<Home className="h-4 w-4 text-gray-400" />}
             />
-            
+
             <Input
               label="Postal Code"
               name="postalCode"
@@ -147,7 +142,7 @@ const ProfilePage = () => {
               onChange={handleProfileChange}
               disabled={!isEditing}
             />
-            
+
             <Input
               label="City"
               name="city"
@@ -156,7 +151,7 @@ const ProfilePage = () => {
               disabled={!isEditing}
               icon={<MapPin className="h-4 w-4 text-gray-400" />}
             />
-            
+
             <Input
               label="Country"
               name="country"
@@ -166,25 +161,19 @@ const ProfilePage = () => {
             />
           </div>
         </CardContent>
-        
+
         {isEditing && (
           <CardFooter className="justify-end space-x-4">
-            <Button 
-              variant="outline" 
-              onClick={() => setIsEditing(false)}
-            >
+            <Button variant="outline" onClick={() => setIsEditing(false)}>
               Cancel
             </Button>
-            <Button 
-              onClick={saveProfile} 
-              isLoading={isSaving}
-            >
+            <Button onClick={saveProfile} isLoading={isSaving}>
               Save Changes
             </Button>
           </CardFooter>
         )}
       </Card>
-      
+
       {/* Password Change Card */}
       <Card>
         <CardHeader className="pb-2">
@@ -193,7 +182,7 @@ const ProfilePage = () => {
             <CardTitle>Security</CardTitle>
           </div>
         </CardHeader>
-        
+
         <CardContent>
           <h3 className="text-base font-medium text-gray-700 mb-4">Change Password</h3>
           <div className="space-y-4">
@@ -205,7 +194,7 @@ const ProfilePage = () => {
               onChange={handlePasswordChange}
               placeholder="••••••••"
             />
-            
+
             <Input
               label="New Password"
               name="new"
@@ -215,7 +204,7 @@ const ProfilePage = () => {
               placeholder="••••••••"
               helperText="Must be at least 8 characters"
             />
-            
+
             <Input
               label="Confirm New Password"
               name="confirm"
@@ -226,9 +215,9 @@ const ProfilePage = () => {
             />
           </div>
         </CardContent>
-        
+
         <CardFooter className="justify-end">
-          <Button 
+          <Button
             onClick={changePassword}
             isLoading={isChangingPassword}
             disabled={!passwords.current || !passwords.new || !passwords.confirm}

@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Check if user is logged in
+  // Check if user is logged in on mount
   useEffect(() => {
     const checkAuth = () => {
       const storedUser = localStorage.getItem('user');
@@ -31,25 +31,27 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
       setIsLoading(false);
     };
-    
+
     checkAuth();
   }, []);
 
   const login = async (email: string, password: string) => {
-    // Simulate API call
     setIsLoading(true);
     try {
-      // In a real app, this would be an API call
+      // Example: use the password here, e.g., for API call (simulate here)
+      console.log('Logging in with password:', password);
+
+      // Simulate API call delay
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Mock successful login
+
+      // Mock user data after login
       const userData: User = {
         id: '12345',
         name: email.split('@')[0],
         email,
         role: 'user',
       };
-      
+
       localStorage.setItem('user', JSON.stringify(userData));
       setUser(userData);
     } catch (error) {
@@ -61,20 +63,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const register = async (name: string, email: string, password: string) => {
-    // Simulate API call
     setIsLoading(true);
     try {
-      // In a real app, this would be an API call
+      console.log('Registering with password:', password);
+
+      // Simulate API call delay
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Mock successful registration
+
+      // Mock user data after registration
       const userData: User = {
         id: '12345',
         name,
         email,
         role: 'user',
       };
-      
+
       localStorage.setItem('user', JSON.stringify(userData));
       setUser(userData);
     } catch (error) {
